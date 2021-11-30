@@ -36,6 +36,9 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
 
     BetterAudioPickerPluginEventSink pickResultStream;
 
+    Map<String, AudioModel> audioUriMap = new HashMap<>();
+
+
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         BetterAudioPickerPluginApi.setup(binding, this, binding.getApplicationContext());
@@ -65,7 +68,7 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
-                    String name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.TITLE));
+                    String name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.DISPLAY_NAME));
                     Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
                     long date = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.DATE_MODIFIED));
                     long duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.DURATION));
@@ -79,6 +82,7 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
                     audioModel.size = size;
 
                     audioList.add(audioModel);
+                    audioUriMap.put(audioModel.uri, audioModel);
                 }
                 cursor.close();
             }
@@ -132,8 +136,15 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
         new Thread(() -> {
             ContentResolver contentResolver = context.getContentResolver();
 
+            AudioModel audioModel = audioUriMap.get(uri);
+
             // 临时文件
-            File tempFile = new File(context.getExternalCacheDir(), "audio_picker.tmp");
+            File tempFile;
+            if (audioModel != null) {
+                tempFile = new File(context.getExternalCacheDir(), audioModel.name);
+            } else {
+                tempFile = new File(context.getExternalCacheDir(), "audio_picker.tmp");
+            }
             if (tempFile.exists()) {
                 tempFile.deleteOnExit();
             }
@@ -180,7 +191,6 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
                     }
                     if (reader != null) {
                         reader.close();
-                        ;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
