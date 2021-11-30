@@ -1,0 +1,27 @@
+name: better_audio_picker_plugin
+description: Audio picker for Flutter.
+version: 0.0.1
+homepage: https://github.com/WangYng
+repository: https://github.com/WangYng/better_audio_picker_plugin
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# The following section is specific to Flutter.
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: io.github.wangyng.better_audio_picker_plugin
+        pluginClass: BetterAudioPickerPluginPlugin
+      ios:
+        pluginClass: BetterAudioPickerPluginPlugin
