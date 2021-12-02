@@ -8,7 +8,7 @@ A new flutter plugin project.
 
 ```yaml
 dependencies:
-  better_audio_picker_plugin: ^0.0.2
+  better_audio_picker_plugin: ^0.0.3
 ```
 
 2. Install it

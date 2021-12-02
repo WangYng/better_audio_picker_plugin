@@ -62,6 +62,7 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
     @Override
     public void scanAudio(Context context, int instanceId) {
         new Thread(() -> {
+            context.getContentResolver().notifyChange(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null);
             Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, MediaStore.Audio.Media.IS_MUSIC + " = 1", null, null);
             List<AudioModel> audioList = new ArrayList<>();
 
