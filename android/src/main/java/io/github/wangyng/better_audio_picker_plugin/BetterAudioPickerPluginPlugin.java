@@ -142,9 +142,9 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
             // 临时文件
             File tempFile;
             if (audioModel != null) {
-                tempFile = new File(context.getExternalCacheDir(), audioModel.name);
+                tempFile = new File(context.getCacheDir(), audioModel.name);
             } else {
-                tempFile = new File(context.getExternalCacheDir(), "audio_picker.tmp");
+                tempFile = new File(context.getCacheDir(), "audio_picker.tmp");
             }
             if (tempFile.exists()) {
                 tempFile.deleteOnExit();
