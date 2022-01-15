@@ -20,7 +20,7 @@ public interface BetterAudioPickerPluginApi {
 
     void scanAudio(Context context, int instanceId);
 
-    void pickAudio(Context context, int instanceId, String uri);
+    void pickAudio(Context context, int instanceId, String uri, String path);
 
     static void setup(FlutterPlugin.FlutterPluginBinding binding, BetterAudioPickerPluginApi api, Context context) {
         BinaryMessenger binaryMessenger = binding.getBinaryMessenger();
@@ -96,7 +96,8 @@ public interface BetterAudioPickerPluginApi {
                         HashMap<String, Object> params = (HashMap<String, Object>) message;
                         int instanceId = (int)params.get("instanceId");
                         String uri = (String)params.get("uri");
-                        api.pickAudio(context, instanceId, uri);
+                        String path = (String)params.get("path");
+                        api.pickAudio(context, instanceId, uri, path);
                         wrapped.put("result", null);
                     } catch (Exception exception) {
                         wrapped.put("error", wrapError(exception));

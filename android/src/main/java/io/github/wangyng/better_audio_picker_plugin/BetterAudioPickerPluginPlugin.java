@@ -36,8 +36,6 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
 
     BetterAudioPickerPluginEventSink pickResultStream;
 
-    Map<String, AudioModel> audioUriMap = new HashMap<>();
-
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -83,7 +81,6 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
                     audioModel.size = size;
 
                     audioList.add(audioModel);
-                    audioUriMap.put(audioModel.uri, audioModel);
                 }
                 cursor.close();
             }
@@ -131,21 +128,14 @@ public class BetterAudioPickerPluginPlugin implements FlutterPlugin, BetterAudio
     }
 
     @Override
-    public void pickAudio(Context context, int instanceId, String uri) {
+    public void pickAudio(Context context, int instanceId, String uri, String path) {
 
         // 转换 uri 到 path
         new Thread(() -> {
             ContentResolver contentResolver = context.getContentResolver();
 
-            AudioModel audioModel = audioUriMap.get(uri);
-
             // 临时文件
-            File tempFile;
-            if (audioModel != null) {
-                tempFile = new File(context.getCacheDir(), audioModel.name);
-            } else {
-                tempFile = new File(context.getCacheDir(), "audio_picker.tmp");
-            }
+            File tempFile = new File(path);
             if (tempFile.exists()) {
                 tempFile.deleteOnExit();
             }

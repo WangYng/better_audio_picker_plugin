@@ -2,7 +2,7 @@
 //  BetterAudioPickerPluginApi.h
 //  Pods
 //
-//  Created by 汪洋 on 2021/11/29.
+//  Created by 汪洋 on 2022/1/15.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,7 +17,7 @@
 
 - (void)scanAudioWithInstanceId:(NSInteger)instanceId;
 
-- (void)pickAudioWithInstanceId:(NSInteger)instanceId uri:(NSString *)uri;
+- (void)pickAudioWithInstanceId:(NSInteger)instanceId uri:(NSString *)uri path:(NSString *)path;
 
 @end
 

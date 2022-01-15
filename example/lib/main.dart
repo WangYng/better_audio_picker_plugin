@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:better_audio_picker_plugin/better_audio_picker_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path/path.dart' as path;
 
 void main() {
   runApp(MyApp());
@@ -64,8 +66,10 @@ class _MyAppState extends State<MyApp> {
               final audio = audioList[index];
               return CupertinoButton(
                   child: Text("${audio.name}"),
-                  onPressed: () {
-                    audioPickerPlugin.pickAudio(uri: audio.uri);
+                  onPressed: () async {
+                    final tempDirectory = await getTemporaryDirectory();
+                    final tempPath = path.join(tempDirectory.path, audio.name);
+                    audioPickerPlugin.pickAudio(uri: audio.uri, path: tempPath);
                   });
             },
             itemCount: audioList.length),

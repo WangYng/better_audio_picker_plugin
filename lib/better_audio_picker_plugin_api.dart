@@ -29,12 +29,13 @@ class BetterAudioPickerPluginApi {
     }
   }
 
-  static Future<void> pickAudio({required int instanceId, required String uri}) async {
+  static Future<void> pickAudio({required int instanceId, required String uri, required String path}) async {
     const channel = BasicMessageChannel<dynamic>('io.github.wangyng.better_audio_picker_plugin.pickAudio', StandardMessageCodec());
 
     final Map<String, dynamic> requestMap = {};
     requestMap["instanceId"] = instanceId;
     requestMap["uri"] = uri;
+    requestMap["path"] = path;
     final reply = await channel.send(requestMap);
 
     if (!(reply is Map)) {

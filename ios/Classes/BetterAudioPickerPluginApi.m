@@ -2,7 +2,7 @@
 //  BetterAudioPickerPluginApi.m
 //  Pods
 //
-//  Created by 汪洋 on 2021/11/29.
+//  Created by 汪洋 on 2022/1/15.
 //
 
 #import "BetterAudioPickerPluginApi.h"
@@ -59,7 +59,8 @@
                     NSDictionary *params = message;
                     NSInteger instanceId = [params[@"instanceId"] integerValue];
                     NSString *uri = params[@"uri"];
-                    [api pickAudioWithInstanceId:instanceId uri:uri];
+                    NSString *path = params[@"path"];
+                    [api pickAudioWithInstanceId:instanceId uri:uri path:path];
                     wrapped[@"result"] = nil;
                 } else {
                     wrapped[@"error"] = @{@"message": @"parse message error"};

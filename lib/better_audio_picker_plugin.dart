@@ -43,8 +43,8 @@ class BetterAudioPickerPlugin {
   }
 
   /// 选择音频
-  Future<void> pickAudio({required String uri}) async {
-    return BetterAudioPickerPluginApi.pickAudio(instanceId: instanceId, uri: uri);
+  Future<void> pickAudio({required String uri, required String path}) async {
+    return BetterAudioPickerPluginApi.pickAudio(instanceId: instanceId, uri: uri, path: path);
   }
 }
 
